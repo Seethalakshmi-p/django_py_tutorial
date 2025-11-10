@@ -1,0 +1,289 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Django Notes</title>
+{% load static %}
+<style>
+ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:#f7fafc;color:#0f172a;margin:0;padding:0}
+ .container{max-width:1050px;margin:0 auto;padding:28px}
+ h1{margin:12px 0;font-size:20px}
+ h2{margin:20px 0 8px;font-size:14px}
+ h3{margin:14px 0 6px;font-size:10px}
+ section{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 5px 20px rgba(2,6,23,.06);margin:16px 0}
+ .pad{padding:18px}
+ pre {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(2,8,23,.35);
+  font-size:10px
+}
+code {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+ .pill{display:inline-block;background:#e0f2fe;color:#0369a1;padding:4px 10px;font-size:.8rem;border-radius:10px;margin:2px 4px 2px 0}
+ ul{padding-left:18px;margin-top:6px;list-style-type: none}
+ li{margin:4px 0}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>Django Notes</h1>
+<p>A fast guide covering project setup, apps, models, views, URLs, templates, ORM, admin, and common commands.</p>
+
+<section><div class="pad">
+<ul>
+<li> &check; Open source and written in Python</li>
+
+<li> &check; Back-end + Server side + Web framework.</li>
+
+<li> &check; Makes it easier to build web pages.</li>
+
+<li> &check; Data is delivered as an Object Relational Mapping (ORM)</li>
+
+<li> &check; Comes with ready-to-use features like login system, database connection and CRUD operations.</li>
+
+<li> &check; Helpful for database driven websites</li>
+
+<li> &check; Follows the MVT design pattern</li>
+</ul>
+</div></section>
+
+<section><div class="pad">
+<h2>&#9881;&#65039;; Project Structure</h2>
+<p class=MsoNormal><img width=228 height=186 src="{% static 'img1.jpg' %}"> </p>
+</div></section>
+
+<section><div class="pad">
+<h2>1) Create & Run Project</h2>
+<div class="pill">Project Setup</div>
+<pre><code># install django
+pip install django
+
+# create project
+django-admin startproject mysite
+cd mysite
+
+# run server
+python manage.py runserver
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>2) Create App</h2>
+<pre><code># inside project root
+python manage.py startapp blog
+
+# add to settings.py
+INSTALLED_APPS = [
+    ...
+    'blog',
+]
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>3) Models</h2>
+<pre><code># blog/models.py
+from django.db import models
+
+class Post(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+# apply DB changes
+python manage.py makemigrations
+python manage.py migrate
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>4) Admin</h2>
+<pre><code># create superuser
+python manage.py createsuperuser
+
+# blog/admin.py
+from django.contrib import admin
+from .models import Post
+admin.site.register(Post)
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>5) URLs</h2>
+<pre><code># mysite/urls.py
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('blog.urls')),
+]
+
+# blog/urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='home'),
+]
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>6) Views</h2>
+<pre><code># blog/views.py
+from django.shortcuts import render
+from .models import Post
+
+def index(request):
+    posts = Post.objects.all()
+    return render(request, 'blog/index.html', {'posts': posts})
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>7) Templates</h2>
+<div class="pill">HTML + Django Template Language</div>
+<pre><code># settings.py
+TEMPLATES = [
+  {
+    'DIRS': [ BASE_DIR / 'templates' ],
+  },
+]
+
+# blog/templates/blog/index.html
+<!doctype html>
+<html>
+<body>
+  <h1>All posts</h1>
+  {% for p in posts %}
+    <h2>{{ p.title }}</h2>
+    <p>{{ p.content }}</p>
+  {% empty %}No posts yet{% endfor %}
+</body>
+</html>
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>8) Static & Media</h2>
+<pre><code># settings.py
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [ BASE_DIR / 'static' ]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# urls.py
+from django.conf import settings
+from django.conf.urls.static import static
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>9) Forms</h2>
+<pre><code># blog/forms.py
+from django import forms
+from .models import Post
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title','content']
+
+# blog/views.py
+from .forms import PostForm
+
+def create(request):
+    if request.method=='POST':
+        f = PostForm(request.POST)
+        if f.is_valid(): f.save()
+    return render(request,'blog/form.html',{'form':f})
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>10) ORM Quick Reference</h2>
+<pre><code># SELECT
+Post.objects.all()
+Post.objects.filter(title__icontains='hi')
+Post.objects.get(id=1)
+
+# CREATE
+Post.objects.create(title='A', content='x')
+
+# UPDATE
+p = Post.objects.get(id=1)
+p.title = 'New'
+p.save()
+
+# DELETE
+Post.objects.filter(id=1).delete()
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>11) Authentication</h2>
+<pre><code># settings.py
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+# urls.py
+from django.contrib.auth import views as auth_views
+urlpatterns += [
+  path('login/', auth_views.LoginView.as_view(), name='login'),
+  path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+]
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>12) Django REST Framework (quick)</h2>
+<pre><code>pip install djangorestframework
+
+# settings.py
+INSTALLED_APPS += ['rest_framework']
+
+# blog/api.py
+from rest_framework import viewsets, serializers
+from .models import Post
+
+class PostSer(serializers.ModelSerializer):
+    class Meta: model=Post; fields='__all__'
+
+class PostView(viewsets.ModelViewSet):
+    queryset=Post.objects.all()
+    serializer_class=PostSer
+
+# mysite/urls.py
+from rest_framework import routers
+from blog.api import PostView
+
+r = routers.DefaultRouter()
+r.register('posts', PostView)
+urlpatterns += r.urls
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>Common Commands</h2>
+<pre><code>python manage.py runserver
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py collectstatic
+</code></pre>
+</div></section>
+
+</div>
+
+{% endblock %}

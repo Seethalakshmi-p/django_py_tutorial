@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>JavaScript Notes</title>
+<style>
+ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:#f7fafc;color:#0f172a;margin:0}
+ .container{max-width:1050px;margin:0 auto;padding:28px}
+ h1{font-size:32px;margin:10px 0}
+ h2{margin:20px 0 8px;font-size:14px}
+ section{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 5px 20px rgba(2,6,23,.06);margin-bottom:16px}
+ .pad{padding:18px}
+ pre {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(2,8,23,.35);
+  font-size:10px
+}
+code {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>JavaScript Notes</h1>
+<p>Complete notes covering variables, arrays, functions, DOM, async, OOP, modules and more.</p>
+
+<section><div class="pad">
+<h2>1) What is JavaScript?</h2>
+<p>JavaScript is a scripting language used for client-side and server-side development. Runs in browsers and Node.js.</p>
+</div></section>
+
+<section><div class="pad">
+<h2>2) Variables</h2>
+<pre><code>let x = 10;      // block scoped
+const y = 20;    // cannot reassign
+var z = 30;      // function scoped</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>3) Data Types</h2>
+<pre><code>let n = 42;          // number
+let s = "hello";     // string
+let b = true;        // boolean
+let u;               // undefined
+let o = null;        // null
+let obj = {};
+let arr = [];</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>4) Operators</h2>
+<pre><code>// arithmetic: + - * / %
+// comparison: ==, ===, !=, !==, > < >= <=
+// logical: &&, ||, !
+// ternary:
+let result = x>5 ? "big" : "small";</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>5) Strings</h2>
+<pre><code>let str = "JavaScript";
+str.length;
+str.toUpperCase();
+str.includes("Script");
+`Hello ${str}`;</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>6) Arrays</h2>
+<pre><code>let a = [1,2,3];
+a.push(4);
+a.pop();
+a.includes(2);
+a.map(x => x*2);
+a.filter(x => x>1);
+a.reduce((a,b)=>a+b,0);</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>7) Objects</h2>
+<pre><code>let user = {name:"John", age:30};
+user.name;
+user["age"];
+user.city = "NY";</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>8) Functions</h2>
+<pre><code>function add(a,b){ return a+b; }
+const mul = (a,b) => a*b;</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>9) Loops</h2>
+<pre><code>for(let i=0;i<5;i++){}
+for(let v of [1,2,3]){}
+[1,2,3].forEach(x => console.log(x));</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>10) ES6 Features</h2>
+<pre><code>// spread
+let a2 = [...a,4];
+// destructuring
+let {name, age} = user;
+let [f,s] = a;</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>11) DOM</h2>
+<pre><code>document.getElementById("id");
+document.querySelector(".class");
+let el = document.createElement("p");
+el.textContent = "Hi";
+document.body.append(el);</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>12) Events</h2>
+<pre><code>let btn = document.querySelector("button");
+btn.addEventListener("click", () => alert("clicked"));</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>13) Async</h2>
+<pre><code>async function load(){
+  let r = await fetch("/data.json");
+  let data = await r.json();
+  console.log(data);
+}
+load();</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>14) JSON</h2>
+<pre><code>let obj = {a:1,b:2};
+let json = JSON.stringify(obj);
+let back = JSON.parse(json);</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>15) LocalStorage</h2>
+<pre><code>localStorage.setItem("key","value");
+localStorage.getItem("key");
+localStorage.removeItem("key");</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>16) Errors</h2>
+<pre><code>try {
+  throw new Error("Oops");
+} catch(e){
+  console.log(e.message);
+}</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>17) Classes</h2>
+<pre><code>class Person {
+  constructor(name){ this.name=name; }
+  speak(){ console.log("Hi "+this.name); }
+}
+let p = new Person("John");
+p.speak();</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>18) Modules</h2>
+<pre><code>// file1.js
+export function hello(){ return "Hi"; }
+// file2.js
+import {hello} from "./file1.js";</code></pre>
+</div></section>
+
+</div>
+{% endblock %}

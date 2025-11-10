@@ -1,0 +1,370 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>HackerRank Questions — Solutions</title>
+<style>
+ body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:#f7fafc;color:#0f172a;margin:0}
+ .container{max-width:1100px;margin:0 auto;padding:28px}
+ h1{margin:12px 0;font-size:20px}
+ h2{margin:20px 0 8px;font-size:14px}
+ h3{margin:14px 0 6px;font-size:10px}
+ .meta{color:#475569}
+ section{background:#fff;border:1px solid #e2e8f0;border-radius:12px;margin:14px 0;box-shadow:0 4px 14px rgba(2,6,23,.06)}
+ .pad{padding:18px}
+ .title{display:flex;justify-content:space-between;align-items:center}
+ .difficulty{font-size:.78rem;padding:4px 8px;border-radius:8px;background:#eef2ff;color:#3730a3}
+pre {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(2,8,23,.35);
+  font-size:11px
+}
+code {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+p {
+  font-size: 11px ;
+  line-height: 1.6;
+  color: #64748b;  /* slate-500 */
+  margin: 9px 0;
+}
+ .complex{color:#475569;font-weight:600;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>HackerRank Questions — Python Solutions</h1>
+<p class="meta">Each item shows input format, output format, and Python solution.</p>
+
+<!-- 1 -->
+<section><div class="pad"><div class="title"><h2>1) Sum of Two Numbers</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> Two integers a b</p>
+<p><strong>Output:</strong> Sum (a+b)</p>
+<pre><code># Example
+# Input
+# 5 7
+# Output
+# 12
+
+a,b = map(int,input().split())
+print(a+b)
+</code></pre>
+<div class="complex">O(1)</div></div></section>
+
+<!-- 2 -->
+<section><div class="pad"><div class="title"><h2>2) Compare Two Numbers</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> Two integers a b</p>
+<p><strong>Output:</strong> "a<b", "a>b" or "a=b"</p>
+<pre><code>a,b = map(int,input().split())
+if a<b: print("a<b")
+elif a>b: print("a>b")
+else: print("a=b")
+</code></pre>
+<div class="complex">O(1)</div></div></section>
+
+<!-- 3 -->
+<section><div class="pad"><div class="title"><h2>3) Maximum of Three</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> a b c</p>
+<p><strong>Output:</strong> max value</p>
+<pre><code>a,b,c = map(int,input().split())
+print(max(a,b,c))
+</code></pre>
+<div class="complex">O(1)</div></div></section>
+
+<!-- 4 -->
+<section><div class="pad"><div class="title"><h2>4) Even or Odd</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> n</p>
+<p><strong>Output:</strong> EVEN or ODD</p>
+<pre><code>n = int(input())
+print("EVEN" if n%2==0 else "ODD")
+</code></pre>
+<div class="complex">O(1)</div></div></section>
+
+<!-- 5 -->
+<section><div class="pad"><div class="title"><h2>5) Factorial</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> n</p>
+<p><strong>Output:</strong> n!</p>
+<pre><code>from math import prod
+n = int(input())
+print(prod(range(1,n+1)))
+</code></pre>
+<div class="complex">O(n)</div></div></section>
+
+<!-- 6 -->
+<section><div class="pad"><div class="title"><h2>6) Sum of Array</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> n, then n integers</p>
+<p><strong>Output:</strong> sum</p>
+<pre><code>n = int(input())
+a = list(map(int,input().split()))
+print(sum(a))
+</code></pre>
+<div class="complex">O(n)</div></div></section>
+
+<!-- 7 -->
+<section><div class="pad"><div class="title"><h2>7) Array Maximum</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> n, array</p>
+<p><strong>Output:</strong> max element</p>
+<pre><code>n = int(input())
+a = list(map(int,input().split()))
+print(max(a))
+</code></pre>
+<div class="complex">O(n)</div></div></section>
+
+<!-- 8 -->
+<section><div class="pad"><div class="title"><h2>8) Reverse List</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> n, array</p>
+<p><strong>Output:</strong> reversed array</p>
+<pre><code>n = int(input())
+a = list(map(int,input().split()))
+print(*a[::-1])
+</code></pre>
+<div class="complex">O(n)</div></div></section>
+
+<!-- 9 -->
+<section><div class="pad"><div class="title"><h2>9) Count Even Numbers</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> n, array</p>
+<p><strong>Output:</strong> count of even numbers</p>
+<pre><code>n = int(input())
+a = list(map(int,input().split()))
+print(sum(x%2==0 for x in a))
+</code></pre>
+<div class="complex">O(n)</div></div></section>
+
+<!-- 10 -->
+<section><div class="pad"><div class="title"><h2>10) Linear Search</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> n, array, key</p>
+<p><strong>Output:</strong> index or -1</p>
+<pre><code>n = int(input())
+a = list(map(int,input().split()))
+k = int(input())
+print(a.index(k) if k in a else -1)
+</code></pre>
+<div class="complex">O(n)</div></div></section>
+
+<!-- 11 -->
+<section><div class="pad"><div class="title"><h2>11) Binary Search</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> sorted list & key</p>
+<p><strong>Output:</strong> index or -1</p>
+<pre><code>def bs(a,k):
+    l,r=0,len(a)-1
+    while l<=r:
+        m=(l+r)//2
+        if a[m]==k: return m
+        if a[m]<k: l=m+1
+        else: r=m-1
+    return -1
+n = int(input())
+a = list(map(int,input().split()))
+k = int(input())
+print(bs(a,k))
+</code></pre>
+<div class="complex">O(log n)</div></div></section>
+
+<!-- 12 -->
+<section><div class="pad"><div class="title"><h2>12) Matrix Addition</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> r c, then two matrices</p>
+<p><strong>Output:</strong> sum matrix</p>
+<pre><code>r,c = map(int,input().split())
+A=[list(map(int,input().split())) for _ in range(r)]
+B=[list(map(int,input().split())) for _ in range(r)]
+for i in range(r):
+    print(*[A[i][j]+B[i][j] for j in range(c)])
+</code></pre>
+<div class="complex">O(r*c)</div></div></section>
+
+<!-- 13 -->
+<section><div class="pad"><div class="title"><h2>13) Transpose Matrix</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> r c, matrix</p>
+<p><strong>Output:</strong> transpose</p>
+<pre><code>r,c = map(int,input().split())
+A=[list(map(int,input().split())) for _ in range(r)]
+T = zip(*A)
+for row in T:
+    print(*row)
+</code></pre>
+<div class="complex">O(r*c)</div></div></section>
+
+<!-- 14 -->
+<section><div class="pad"><div class="title"><h2>14) Diagonal Difference</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> n, nxn matrix</p>
+<p><strong>Output:</strong> abs difference</p>
+<pre><code>n = int(input())
+A=[list(map(int,input().split())) for _ in range(n)]
+print(abs(sum(A[i][i] for i in range(n)) - sum(A[i][n-1-i] for i in range(n))))
+</code></pre>
+<div class="complex">O(n)</div></div></section>
+
+<!-- 15 -->
+<section><div class="pad"><div class="title"><h2>15) Sum of Digits</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> integer</p>
+<p><strong>Output:</strong> digit sum</p>
+<pre><code>n = input()
+print(sum(int(d) for d in n))
+</code></pre>
+<div class="complex">O(log n)</div></div></section>
+
+<!-- 16 -->
+<section><div class="pad"><div class="title"><h2>16) Reverse Integer</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> integer</p>
+<p><strong>Output:</strong> reversed digits</p>
+<pre><code>n = input().strip()
+print(n[::-1])
+</code></pre>
+<div class="complex">O(log n)</div></div></section>
+
+<!-- 17 -->
+<section><div class="pad"><div class="title"><h2>17) Check Palindrome (string)</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> string</p>
+<p><strong>Output:</strong> YES/NO</p>
+<pre><code>s = input().strip()
+print("YES" if s==s[::-1] else "NO")
+</code></pre>
+<div class="complex">O(n)</div></div></section>
+
+<!-- 18 -->
+<section><div class="pad"><div class="title"><h2>18) Count Vowels</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> string</p>
+<p><strong>Output:</strong> vowel count</p>
+<pre><code>s = input().lower()
+print(sum(c in 'aeiou' for c in s))
+</code></pre>
+<div class="complex">O(n)</div></div></section>
+
+<!-- 19 -->
+<section><div class="pad"><div class="title"><h2>19) Check Anagram</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> s1, s2</p>
+<p><strong>Output:</strong> YES/NO</p>
+<pre><code>s1 = input().strip().lower()
+s2 = input().strip().lower()
+print("YES" if sorted(s1)==sorted(s2) else "NO")
+</code></pre>
+<div class="complex">O(n log n)</div></div></section>
+
+<!-- 20 -->
+<section><div class="pad"><div class="title"><h2>20) Word Frequency</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> n, then n words</p>
+<p><strong>Output:</strong> each unique word count</p>
+<pre><code>from collections import Counter
+n = int(input())
+words=[input().strip() for _ in range(n)]
+c=Counter(words)
+for w in c:
+    print(w, c[w])
+</code></pre>
+<div class="complex">O(n)</div></div></section>
+
+<!-- 21 -->
+<section><div class="pad"><div class="title"><h2>21) Two Sum</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> n, array, target</p>
+<p><strong>Output:</strong> indices or -1</p>
+<pre><code>n = int(input())
+a = list(map(int,input().split()))
+t = int(input())
+seen={}
+for i,x in enumerate(a):
+    if t-x in seen:
+        print(seen[t-x], i)
+        break
+    seen[x]=i
+else:
+    print(-1)
+</code></pre>
+<div class="complex">O(n)</div></div></section>
+
+<!-- 22 -->
+<section><div class="pad"><div class="title"><h2>22) Majority Element (>n/2)</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> n, array</p>
+<p><strong>Output:</strong> element or -1</p>
+<pre><code>n = int(input())
+a = list(map(int,input().split()))
+from collections import Counter
+c=Counter(a)
+for k,v in c.items():
+    if v>n//2: print(k); break
+else: print(-1)
+</code></pre>
+<div class="complex">O(n)</div></div></section>
+
+<!-- 23 -->
+<section><div class="pad"><div class="title"><h2>23) Pair Sum Count</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> n, array, k</p>
+<p><strong>Output:</strong> number of pairs with sum k</p>
+<pre><code>n = int(input())
+a = list(map(int,input().split()))
+k = int(input())
+seen=set(); cnt=0
+for x in a:
+    if k-x in seen: cnt+=1
+    seen.add(x)
+print(cnt)
+</code></pre>
+<div class="complex">O(n)</div></div></section>
+
+<!-- 24 -->
+<section><div class="pad"><div class="title"><h2>24) Remove Duplicates</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> n, array</p>
+<p><strong>Output:</strong> unique elements</p>
+<pre><code>n = int(input())
+a = list(map(int,input().split()))
+print(*sorted(set(a)))
+</code></pre>
+<div class="complex">O(n log n)</div></div></section>
+
+<!-- 25 -->
+<section><div class="pad"><div class="title"><h2>25) Intersection of Two Arrays</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> n, array1; m, array2</p>
+<p><strong>Output:</strong> intersection (unique)</p>
+<pre><code>n = int(input())
+a = set(map(int,input().split()))
+m = int(input())
+b = set(map(int,input().split()))
+print(*sorted(a & b))
+</code></pre>
+<div class="complex">O(n log n)</div></div></section>
+
+<!-- 26 -->
+<section><div class="pad"><div class="title"><h2>26) Union of Two Arrays</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> lists</p>
+<p><strong>Output:</strong> union (unique)</p>
+<pre><code>a = set(map(int,input().split()))
+b = set(map(int,input().split()))
+print(*sorted(a | b))
+</code></pre>
+<div class="complex">O(n log n)</div></div></section>
+
+<!-- 27 -->
+<section><div class="pad"><div class="title"><h2>27) Subarray Sum (Kadane)</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> n, array</p>
+<p><strong>Output:</strong> max subarray sum</p>
+<pre><code>n = int(input())
+a = list(map(int,input().split()))
+best=cur=a[0]
+for x in a[1:]: cur=max(x,cur+x); best=max(best,cur)
+print(best)
+</code></pre>
+<div class="complex">O(n)</div></div></section>
+
+<!-- 28 -->
+<section><div class="pad"><div class="title"><h2>28) Two Sorted Merge</h2><span class="difficulty">Easy</span></div>
+<p><strong>Input:</strong> two sorted lists</p>
+<p><strong>Output:</strong> merged sorted</p>
+<pre><code>a = list(map(int,input().split()))
+b = list(map(int,input().split()))
+i=j=0; res=[]
+while i<len(a) and j<len(b):
+    if a[i]<b[j]: res.append(a[i]); i+=1
+    else: res.append(b[j]); j+=1
+res += a[i:]+b[j:]
+print(*res)
+</code></pre>
+<div class="complex">O(n+m)</div></div></section>
+
+  <p class="meta">Tip: Use these as patterns. For I/O on HackerRank, wrap functions with input() parsing and print().</p>
+</div>
+
+
+{% endblock %}

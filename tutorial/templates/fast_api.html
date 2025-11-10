@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FastAPI Notes</title>
+<style>
+  body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:#f7fafc;color:#0f172a;margin:0;padding:0}
+  .container{max-width:1050px;margin:0 auto;padding:28px}
+  h1{margin:12px 0;font-size:20px}
+  h2{margin:20px 0 8px;font-size:14px}
+  h3{margin:14px 0 6px;font-size:10px}
+  section{background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 5px 20px rgba(2,6,23,.06);margin:16px 0}
+  .pad{padding:18px}
+  pre {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(2,8,23,.35);
+  font-size:11px
+}
+code {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+  .pill{display:inline-block;background:#e0f2fe;color:#0369a1;padding:4px 10px;font-size:.8rem;border-radius:10px;margin:2px 4px 2px 0}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>FastAPI Notes</h1>
+<p>Fast guide to building APIs with FastAPI: setup, routes, models, validation, auth, and async.</p>
+
+<section><div class="pad">
+<h2>1) Install & Run</h2>
+<pre><code># install
+pip install fastapi uvicorn[standard]
+
+# run
+uvicorn main:app --reload
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>2) Basic App</h2>
+<pre><code># main.py
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def home():
+    return {"msg":"Hello FastAPI"}
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>3) Path & Query Params</h2>
+<pre><code>from fastapi import FastAPI
+app = FastAPI()
+
+@app.get("/items/{item_id}")
+def read_item(item_id: int, q: str|None=None):
+    return {"item_id":item_id, "query":q}
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>4) Pydantic Models</h2>
+<pre><code>from pydantic import BaseModel
+
+class User(BaseModel):
+    name: str
+    age: int
+
+@app.post("/users")
+def create_user(u: User):
+    return {"saved":u}
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>5) Response Models</h2>
+<pre><code>class UserOut(BaseModel):
+    name: str
+
+@app.post("/users", response_model=UserOut)
+def create_user(u: User):
+    return {"name":u.name}
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>6) Validation</h2>
+<pre><code>class Product(BaseModel):
+    title: str
+    price: float
+
+@app.post("/products")
+def add_product(p: Product):
+    assert p.price > 0
+    return p
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>7) Async Support</h2>
+<pre><code>@app.get("/async")
+async def async_example():
+    return {"msg":"async OK"}
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>8) Dependencies</h2>
+<pre><code>from fastapi import Depends
+
+def auth_token(x: str|None=None):
+    if x != "secret": raise Exception("bad token")
+
+@app.get("/secure")
+def secure(data: str, _:None=Depends(auth_token)):
+    return {"ok":True, "data":data}
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>9) File Upload</h2>
+<pre><code>from fastapi import File, UploadFile
+
+@app.post("/upload")
+def upload(f: UploadFile = File(...)):
+    return {"filename":f.filename}
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>10) Static & Templates</h2>
+<pre><code># pip install jinja2
+from fastapi import Request
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+tpl = Jinja2Templates(directory="templates")
+
+@app.get("/page")
+def page(req: Request):
+    return tpl.TemplateResponse("index.html",{"request":req})
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>11) Auth (OAuth2 Password)</h2>
+<pre><code>from fastapi.security import OAuth2PasswordBearer
+from fastapi import Depends
+
+o2 = OAuth2PasswordBearer(tokenUrl="token")
+
+@app.post("/token")
+def login():
+    return {"access_token":"abc", "token_type":"bearer"}
+
+@app.get("/me")
+def me(token: str = Depends(o2)):
+    return {"token":token}
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>12) Database (Example: SQLModel)</h2>
+<pre><code># pip install sqlmodel
+from sqlmodel import SQLModel, Field, create_engine, Session
+
+class Item(SQLModel, table=True):
+    id: int|None = Field(default=None, primary_key=True)
+    name: str
+
+engine = create_engine("sqlite:///app.db")
+SQLModel.metadata.create_all(engine)
+
+@app.post("/items")
+def add(i: Item):
+    with Session(engine) as s:
+        s.add(i); s.commit(); s.refresh(i)
+        return i
+</code></pre>
+</div></section>
+
+<section><div class="pad">
+<h2>Common Run Commands</h2>
+<pre><code>uvicorn main:app --reload
+uvicorn main:app --host 0.0.0.0 --port 8000
+</code></pre>
+</div></section>
+
+</div>
+
+{% endblock %}
